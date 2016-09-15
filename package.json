@@ -1,0 +1,30 @@
+{
+  "name": "zdc-search",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:unit": "node ./test/unit | tap-spec",
+    "test:integration": "NODE_ENV=test node ./test/integration | tap-spec",
+    "test": "npm run test:unit && npm run test:integration",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bucanero": "git+https://github.com/zorro-del-caribe/bucanero.git",
+    "zdc": "https://github.com/zorro-del-caribe/zdc-sdk",
+    "elasticsearch": "^11.0.1",
+    "koa-bodyparser": "^2.2.0",
+    "koa-compress": "^1.0.9",
+    "bucanero-router": "git+https://github.com/zorro-del-caribe/bucanero-router.git"
+  },
+  "devDependencies": {
+    "casual": "^1.5.5",
+    "koa": "^1.2.4",
+    "nock": "^8.0.0",
+    "supertest": "^2.0.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.0"
+  }
+}
