@@ -12,6 +12,7 @@ function findOrCreateIndex (client, indexName) {
 module.exports = {
   priority: 200,
   init: function (app, handlers, startOptions = {}) {
+
     const {conf} = app.context;
     const esConf = conf.value('elasticsearch');
     const host = url.format(esConf);

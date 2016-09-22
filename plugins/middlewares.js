@@ -8,6 +8,7 @@ const auz = require('../middlewares/authorization');
 module.exports = {
   priority: 200,
   init: function (app, handlers) {
+
     return app
       .use(gzip())
       .use(logMiddleware({logger}))

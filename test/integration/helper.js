@@ -6,11 +6,12 @@ const url = require('url');
 module.exports = {
   testFor(tokenScope = {type: 'user', target: 'hello@world.com'}){
     const a = app();
-    return a.start({es:{reset:true}})
+    return a
+      .start({es: {reset: true}})
       .then(function () {
         const {conf} = a.context;
         const {client_id:user, secret:pass}=conf.value('auth');
-        const auth = nock(url.format(conf.value('auth.endpoint')))
+        const auth = nock(url.format(conf.value('auth.fqdn')))
           .get('/tokens/tokenCode')
           .basicAuth({user, pass})
           .reply(200, {

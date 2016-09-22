@@ -3,8 +3,8 @@ const helper = require('./helper');
 const testFor = helper.testFor;
 const casual = require('casual');
 
-
 test('index a new classified', t=> {
+
   testFor({type: 'app'})
     .then(function ({req, app}) {
       req

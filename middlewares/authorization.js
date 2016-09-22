@@ -1,9 +1,8 @@
 module.exports = function () {
   return function * (next) {
     const {token} = this.state;
-    const {conf, zdc} = this.app.context;
-
-    const fullToken = yield zdc.tokens(conf.value('auth')).self({token});
+    const {conf, auth} = this.app.context;
+    const fullToken = yield auth.tokens().self({token});
     const {revoked, expires_in, scope} = fullToken;
 
     if (revoked || expires_in <= 0 || ['user', 'app'].indexOf(scope.type) === -1) {

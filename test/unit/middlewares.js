@@ -5,7 +5,7 @@ const authentication = require('../../middlewares/authentication');
 const authorization = require('../../middlewares/authorization');
 const http = require('http');
 
-function mockZdc (response) {
+function mockAuth (response) {
   return {
     tokens(params = {}){
       return {
@@ -85,7 +85,7 @@ test('authorization middleware: http 403 if token has been revoked', t=> {
     })
     .use(authorization());
 
-  app.context.zdc = mockZdc({
+  app.context.auth = mockAuth({
     token: 'foo',
     revoked: true,
     scope: {},
@@ -110,7 +110,7 @@ test('authorization middleware: http 403 if token has been revoked', t=> {
     })
     .use(authorization());
 
-  app.context.zdc = mockZdc({
+  app.context.auth = mockAuth({
     token: 'foo',
     revoked: false,
     scope: {},
@@ -138,7 +138,7 @@ test('authorization middleware: assign token result', t=> {
       this.body = this.state.token;
     });
 
-  app.context.zdc = mockZdc({
+  app.context.auth = mockAuth({
     token: 'foo',
     revoked: false,
     scope: {
