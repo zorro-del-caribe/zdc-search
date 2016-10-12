@@ -1,14 +1,13 @@
 const url = require('url');
 const amqp = require('amqplib');
-const broker = require('../middlewares/broker');
+
 module.exports = {
-  priority: 202,
+  priority: 300,
   init(app, handlers){
     if (process.env.NODE_ENV !== 'test') {
       const {conf} = app.context;
       const rabbit = conf.value('broker');
       const urlString = url.format(rabbit);
-      const verbose = handlers.filter(h=>h.notify === true);
 
       return new Promise(function (resolve, reject) {
         function tryConnection (retry, timeout = 5000) {
@@ -20,11 +19,24 @@ module.exports = {
               .then(function (ch) {
                 ch.assertExchange('zdc', 'topic', {durable: false});
                 app.context.channel = ch;
-                for (const h of verbose) {
-                  const handlers = Array.isArray(h.handler) ? h.handler : [h.handler];
-                  handlers.unshift(broker(['zdc', h.namespace, h.title].join('.')));
-                  h.handler = handlers;
-                }
+
+                return ch.assertQueue('', {exclusive: true})
+                  .then(function (q) {
+                    ch.bindQueue(q.queue, 'zdc', 'zdc.classifieds.*');
+                    ch.consume(q.queue, function (msg) {
+                      const {fields, content,} = msg;
+                      const {routingKey} = fields;
+                      const [action,...rest] = routingKey.split('.').reverse();
+
+                      if (action === 'create') {
+                        app.context.jobs().index(JSON.parse(content.toString()))
+                          .catch(function (err) {
+                            console.log('could not create job');
+                            console.error(err);
+                          });
+                      }
+                    });
+                  });
               })
               .then(function () {
                 resolve(app);

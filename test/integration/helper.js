@@ -24,7 +24,7 @@ module.exports = {
         return {req: req(a.server), app: a};
       })
       .catch(err=> {
-        console.error(err);
+        console.log(err);
         t.end(err);
       });
 

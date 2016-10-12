@@ -8,8 +8,7 @@ module.exports = function (options = {}) {
       const status = e.status || 500;
       this.status = status;
       if (status === 500) {
-        logger.error(e)
-        logger.error(e)
+        logger.error(e);
       } else {
         this.body = {error: e.message || 'unknown error', error_description: e.error_description || 'no description'};
       }

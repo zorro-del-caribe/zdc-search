@@ -12,12 +12,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.4.2",
     "bucanero": "git+https://github.com/zorro-del-caribe/bucanero.git",
-    "zdc-auth": "git+https://github.com/zorro-del-caribe/node-auth.git",
     "bucanero-router": "git+https://github.com/zorro-del-caribe/bucanero-router.git",
     "elasticsearch": "^11.0.1",
     "koa-bodyparser": "^2.2.0",
-    "koa-compress": "^1.0.9"
+    "koa-compress": "^1.0.9",
+    "zdc-auth": "git+https://github.com/zorro-del-caribe/node-auth.git",
+    "zdc-client": "^1.2.0"
   },
   "devDependencies": {
     "casual": "^1.5.5",
